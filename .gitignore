@@ -35,3 +35,9 @@ jspm_packages
 
 # Optional REPL history
 .node_repl_history
+
+CMakeFiles
+CMakeCache.txt
+cmake_install.cmake
+jsenv/bin/**
+Makefile

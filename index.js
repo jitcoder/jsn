@@ -1,3 +1,5 @@
+'use strict';
+
 const babel = require('babel-core');
 
 const options = {
@@ -39,7 +41,7 @@ class Visitor {
   }
 
   variabledeclaration(node, tabsize) {
-    print('declare-variable',tabsize);
+    print(`JValue_declareVariable`,tabsize);
     return node.declarations;
   }
 
