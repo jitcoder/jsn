@@ -22,7 +22,27 @@
       "outFiles": []
     },
     {
-      "name": "Debug",
+      "name": "Debug app",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceRoot}/jsenv/bin/app",
+      "args": [],
+      "stopAtEntry": false,
+      "cwd": "${workspaceRoot}",
+      "environment": [],
+      "externalConsole": false,
+      "linux": {
+        "MIMode": "gdb"
+      },
+      "osx": {
+        "MIMode": "lldb"
+      },
+      "windows": {
+        "MIMode": "gdb"
+      }
+    },
+    {
+      "name": "Debug simulator",
       "type": "cppdbg",
       "request": "launch",
       "program": "${workspaceRoot}/jsenv/bin/main",

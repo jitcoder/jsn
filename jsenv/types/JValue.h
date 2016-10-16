@@ -1,8 +1,12 @@
+#include "types.h"
+#include "../const.h"
 
-struct JValue {
+struct JValue
+{
   char *identifier;
   int size;
   void *mem;
+  enum types_base inferredType;
 };
 
 struct JValue *JValue_declareVariable(char *indentifier);
