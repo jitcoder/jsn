@@ -8,6 +8,12 @@
     "CMakeFiles": true,
     "node_modules": true,
     "CMakeCache.txt": true,
-    "cmake_install.cmake": true
+    "cmake_install.cmake": true,
+    "*.vcxproj": true,
+    "*.vcxproj.filters": true,
+    "*.sln": true,
+    "Debug": true,
+    "Win32": true,
+    "app.dir": true
   }
 }

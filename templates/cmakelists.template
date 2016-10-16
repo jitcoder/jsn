@@ -1,15 +1,13 @@
 cmake_minimum_required(VERSION 2.8.9)
-project (app)
-set(CMAKE_BUILD_TYPE Debug)
+project ($PROJECT_NAME)
+set(CMAKE_BUILD_TYPE $CMAKE_BUILD_TYPE)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-add_executable(app 
+add_executable($PROJECT_NAME 
+$HEADERS
+$SOURCE
   runtime/app.c
-  runtime/const.h
-  runtime/types/JValue.h
-  runtime/error/trycatch.h
-  runtime/error/exception.h
   runtime/types/JValue.c
   runtime/error/trycatch.c
 

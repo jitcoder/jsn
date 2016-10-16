@@ -41,3 +41,8 @@ CMakeCache.txt
 cmake_install.cmake
 jsenv/bin/**
 Makefile
+*.vcxproj
+*.vcxproj.filters
+*.sln
+app.dir
+Win32/**
