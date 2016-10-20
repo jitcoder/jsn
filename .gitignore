@@ -46,3 +46,4 @@ Makefile
 *.sln
 app.dir
 Win32/**
+typings
