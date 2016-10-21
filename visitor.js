@@ -1,7 +1,7 @@
 const fs = require('fs');
 const { print } = require('./util');
 
-const bootstrap = fs.readFileSync('./jsenv/bootstrap.c', 'utf8');
+const stub = fs.readFileSync('./runtime/stub.c', 'utf8');
 
 
 class Visitor {
@@ -30,7 +30,7 @@ class Visitor {
 
   program(node, tabsize) {
     print('Program', tabsize);
-    this.code = bootstrap;
+    this.code = stub;
     return node.body;
   }
 

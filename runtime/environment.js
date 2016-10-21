@@ -2,13 +2,13 @@ const path = require('path');
 
 module.exports = {
   sources: [
-    path.resolve('types', 'JValue.c'),
-    path.resolve('error', 'trycatch.c')
+    path.join(__dirname, 'types', 'JValue.c'),
+    path.join(__dirname, 'error', 'trycatch.c')
   ],
   headers: [
-    path.resolve('const.h'),
-    path.resolve('types', 'JValue.h'),
-    path.resolve('error', 'trycatch.h'),
-    path.resolve('error', 'exception.h')
+    path.join(__dirname, 'const.h'),
+    path.join(__dirname, 'types', 'JValue.h'),
+    path.join(__dirname, 'error', 'trycatch.h'),
+    path.join(__dirname, 'error', 'exception.h')
   ]
 }

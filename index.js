@@ -1,8 +1,10 @@
 const babel = require('babel-core');
 const fs = require('fs');
 const path = require('path');
-
 const Visitor = require('./visitor');
+const Project = require('./project');
+const environment = require('./runtime/environment');
+const glob = require('glob');
 
 const options = {
   presets: ['es2015']
@@ -10,54 +12,29 @@ const options = {
 
 console.log(`${JSON.stringify(process.argv, null, 2)}`);
 
-const projectPath = process.argv[2];
-const project = JSON.parse(fs.readFileSync(projectPath, 'utf-8'));
+const jsnPath = path.dirname(__filename);
+const cwd = process.cwd();
 
-console.log(`Building ${project.name}...`);
+const projectPath = path.join(cwd, process.argv[2]);
+const projectConfig = JSON.parse(fs.readFileSync(path.join(projectPath, 'project.json'), 'utf-8'));
+
+function js2C(f) {
+  return path.join(path.dirname(f), 'gen', `${path.basename(f, '.js')}.c`);
+}
 
 
+const project = new Project(projectPath, projectConfig);
+project.addRuntime(environment);
+project.addFiles(glob.sync(path.join(projectPath, '**/*.js')).map(js2C));
+project.addFiles(glob.sync(path.join(projectPath, '**/*.h')));
 
-babel.transformFile(path.join(projectPath, project.entry), options, (err, result) => {
+console.log(`Building ${project.config.name}...`);
+
+babel.transformFile(path.join(projectPath, project.config.entry), options, (err, result) => {
   const v = new Visitor();
   v.visit(result.ast.program, 0);
-
-  const buildPath = path.join(projectPath, 'build');
-
-
-  fs.writeFileSync('./jsenv/app.c', v.code);
+  fs.writeFileSync(path.join(project.paths.root, js2C(project.config.entry)), v.code);
+  project.generateProject();
   process.exit(0);
 });
 
-function createCMake(project, path) {
-  const build = process.env.NODE_ENV === 'production' ? 'set(CMAKE_BUILD_TYPE Debug)' : '';
-  const headers = [
-    'runtime/const.h',
-    'runtime/types/JValue.h',
-    'runtime/error/trycatch.h',
-    'runtime/error/exception.h'
-  ];
-  const sources = [
-    'runtime/types/JValue.c',
-    'runtime/error/trycatch.c'
-  ];
-
-  fs.writeFileSync(path.join(path, 'CMakeLists.txt'),
-`
-cmake_minimum_required(VERSION 2.8.9)
-project (app)
-${build}
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY \${CMAKE_BINARY_DIR}/lib)
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY \${CMAKE_BINARY_DIR}/lib)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY \${CMAKE_BINARY_DIR}/bin)
-add_executable(app 
-  runtime/const.h
-  runtime/types/JValue.h
-  runtime/error/trycatch.h
-  runtime/error/exception.h
-  $headers
-  $modules
-  runtime/types/JValue.c
-  runtime/error/trycatch.c
-)
-`);
-}
