@@ -25,7 +25,7 @@ function js2C(f) {
 
 const project = new Project(projectPath, projectConfig);
 project.addRuntime(environment);
-project.addFiles(glob.sync(path.join(projectPath, '**/*.js')).map(js2C));
+project.addFiles(glob.sync(path.join(projectPath, '**/*.js')).filter(f => !path.dirname(f).endsWith('gen')).map(js2C));
 project.addFiles(glob.sync(path.join(projectPath, '**/*.h')));
 
 console.log(`Building ${project.config.name}...`);
@@ -35,6 +35,7 @@ babel.transformFile(path.join(projectPath, project.config.entry), options, (err,
   v.visit(result.ast.program, 0);
   fs.writeFileSync(path.join(project.paths.root, js2C(project.config.entry)), v.code);
   project.generateProject();
+  project.build();
   process.exit(0);
 });
 

@@ -12,7 +12,9 @@
   "dependencies": {
     "babel-core": "^6.16.0",
     "babel-preset-es2015": "^6.16.0",
-    "glob": "^7.1.1"
+    "copy": "^0.3.0",
+    "glob": "^7.1.1",
+    "pretty-error": "^2.0.2"
   },
   "devDependencies": {
     "eslint": "^3.8.0",
