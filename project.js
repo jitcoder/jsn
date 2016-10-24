@@ -90,7 +90,7 @@ class Project {
       if (WIN) {
         cp.execSync(`robocopy ${runtimePath} ${this.paths.outputPath} /s /e`);
       } else {
-        cp.execSync(`cp -rf ${runtimePath} ${this.paths.outputPath}`);
+        cp.execSync(`cp -rf ${runtimePath}/. ${this.paths.outputPath}/`);
       }
     } catch (e) {
       
