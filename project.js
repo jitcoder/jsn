@@ -40,9 +40,6 @@ class Project {
         this.addFiles(src[i]);
       }
     } else {
-      if (path.extname(src) === '.js') {
-        this.inputs.push()
-      }
       this.sources.push(src);
     }
   }
@@ -91,7 +88,7 @@ class Project {
     this.ensureOutputDir();
     try {
       if (WIN) {
-        cp.execSync(`robocopy ${runtimePath} ${this.paths.outputPath}`);
+        cp.execSync(`robocopy ${runtimePath} ${this.paths.outputPath} /s /e`);
       } else {
         cp.execSync(`cp -rf ${runtimePath} ${this.paths.outputPath}`);
       }
